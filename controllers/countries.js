@@ -2,7 +2,7 @@ const Country = require('../models/Country');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 
-// @desc Get qll countries in db
+// @desc Get all countries
 // @route GET /api/v1/countries
 // @access Public
 export const getCountries = asyncHandler(async (req, res, next) => {
