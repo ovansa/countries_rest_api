@@ -3,12 +3,16 @@ import {
   getCountries,
   getCountry,
   createCountries,
-  deleteCountry,
+  deleteCountries,
 } from '../controllers/countries';
 
 const router = Router();
 
-router.route('/').get(getCountries).post(createCountries);
-router.route('/:id').get(getCountry).delete(deleteCountry);
+router
+  .route('/')
+  .get(getCountries)
+  .post(createCountries)
+  .delete(deleteCountries);
+router.route('/:id').get(getCountry);
 
 export default router;

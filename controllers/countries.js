@@ -25,7 +25,7 @@ export const getCountry = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc Create countries
+// @desc Create single countries
 // @route POST /api/v1/countries
 // @access Public
 export const createCountries = async (req, res, next) => {
@@ -41,17 +41,14 @@ export const createCountries = async (req, res, next) => {
 // @desc Delete country
 // @route DELETE /api/v1/countries/:id
 // @access Public
-export const deleteCountry = async (req, res, next) => {
+export const deleteCountries = async (req, res, next) => {
   try {
-    const country = await Country.findByIdAndDelete(req.params.id);
+    const country = await Country.deleteMany({ _id: { $in: req.body } });
 
     if (!country) {
-      next(
-        new ErrorResponse(`Country not found with id of ${req.params.id}`, 404)
-      );
-    } else {
-      res.status(200).json({ success: true, data: {} });
+      next(new ErrorResponse(`Country not found`, 404));
     }
+    res.status(200).json({ success: true, data: {} });
   } catch (err) {
     next(err);
   }
