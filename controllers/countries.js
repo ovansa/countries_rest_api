@@ -10,7 +10,12 @@ const readXlsxFile = require('read-excel-file/node');
 // @route GET /api/v1/countries
 // @access Public
 export const getCountries = asyncHandler(async (req, res, next) => {
-  const countries = await Country.find();
+  const { name } = req.query;
+  let countries = await Country.find();
+  if (name) {
+    countries = await Country.find({ name });
+  }
+
   res.status(200).json({ success: true, data: countries });
 });
 
