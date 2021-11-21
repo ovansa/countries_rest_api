@@ -1,6 +1,10 @@
+const path = require('path');
+const { unlink } = require('fs');
 const Country = require('../models/Country');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
+const randomstring = require('randomstring');
+const readXlsxFile = require('read-excel-file/node');
 
 // @desc Get all countries
 // @route GET /api/v1/countries
@@ -53,3 +57,65 @@ export const deleteCountries = async (req, res, next) => {
     next(err);
   }
 };
+
+// @desc Create countries via excel file upload
+// @route POST /api/v1/countries/upload
+// @access Public
+export const uploadCountries = async (req, res, next) => {
+  if (!req.files) {
+    return next(new ErrorResponse(`Upload a file`, 400));
+  }
+
+  const file = req.files.file;
+
+  if (!file.mimetype.endsWith('spreadsheetml.sheet')) {
+    return next(new ErrorResponse(`Upload an excel file`, 400));
+  }
+
+  if (file.size > process.env.MAX_FILE_UPLOAD) {
+    return next(
+      new ErrorResponse(
+        `Upload an xlsx file size less than ${process.env.MAX_FILE_UPLOAD}`,
+        400
+      )
+    );
+  }
+
+  file.name = `country_${randomstring.generate(10)}${
+    path.parse(file.name).ext
+  }`;
+
+  const map = {
+    Name: 'name',
+    Capital: 'capital',
+    iso2Code: 'iso2Code',
+  };
+
+  const filePath = `${process.env.FILE_UPLOAD_PATH}/${file.name}`;
+
+  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, (err) => {
+    if (err) {
+      return next(new ErrorResponse(`Problem with file upload`, 500));
+    }
+
+    readXlsxFile(filePath, { map }).then(async ({ rows: countries }) => {
+      unlink(filePath, (err) => {
+        if (err)
+          return next(new ErrorResponse(`Problem with deleting file`, 500));
+        console.log(`File deleted successfully`);
+      });
+
+      try {
+        console.log(countries);
+        const country = await Country.create(countries);
+
+        res.status(201).json({ success: true, data: country });
+      } catch (err) {
+        next(err);
+      }
+    });
+  });
+};
+
+// TODO: Get country by name
+// TODO: Delete country by name

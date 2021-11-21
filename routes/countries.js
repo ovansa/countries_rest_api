@@ -4,6 +4,7 @@ import {
   getCountry,
   createCountries,
   deleteCountries,
+  uploadCountries,
 } from '../controllers/countries';
 
 const router = Router();
@@ -14,5 +15,6 @@ router
   .post(createCountries)
   .delete(deleteCountries);
 router.route('/:id').get(getCountry);
+router.route('/upload').post(uploadCountries);
 
 export default router;

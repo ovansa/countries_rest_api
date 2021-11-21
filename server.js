@@ -1,8 +1,10 @@
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
 const errorHandler = require('./middleware/error');
+const fileupload = require('express-fileupload');
 const connectDB = require('./config/db');
 
 const countries = require('./routes/countries').default;
@@ -18,6 +20,10 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('combined'));
 }
+
+app.use(fileupload());
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/countries', countries);
 
