@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "61913a5bade61b31479133b7",
+    "name": "Nigeria",
+    "capital": "Abuja",
+    "iso2Code": "NG"
+  },
+  {
+    "_id": "61913e71abd74c71610559fd",
+    "name": "Ghana",
+    "capital": "Accra",
+    "iso2Code": "GH"
+  },
+  {
+    "_id": "61920698c4747ee7f652c497",
+    "name": "Cameroon",
+    "capital": "Yaounde",
+    "iso2Code": "CM"
+  },
+  {
+    "_id": "6194a6b677af3512c59daf34",
+    "name": "Benin",
+    "capital": "Cotonou",
+    "iso2Code": "BN"
+  }
+]
