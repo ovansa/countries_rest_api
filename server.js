@@ -11,6 +11,8 @@ const countries = require('./routes/countries').default;
 
 dotenv.config({ path: './config/config.env' });
 
+console.log(`Environment - ${process.env.NODE_ENV}`);
+
 connectDB();
 
 const app = express();
@@ -44,3 +46,5 @@ process.on('unhandledRejection', (err, promise) => {
   // Close server and exit process
   server.close(() => process.exit(1));
 });
+
+module.exports = app;
