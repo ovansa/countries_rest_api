@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const colors = require('colors');
 const errorHandler = require('./middleware/error');
 const fileupload = require('express-fileupload');
-const connectDB = require('./config/db');
+const dbConnection = require('./config/db');
 
 const countries = require('./routes/countries').default;
 
@@ -13,7 +13,7 @@ dotenv.config({ path: './config/config.env' });
 
 console.log(`Environment - ${process.env.NODE_ENV}`);
 
-connectDB();
+dbConnection.connectDB();
 
 const app = express();
 
@@ -47,4 +47,4 @@ process.on('unhandledRejection', (err, promise) => {
   server.close(() => process.exit(1));
 });
 
-module.exports = app;
+module.exports = { app, server };

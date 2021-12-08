@@ -16,18 +16,18 @@ const countries = JSON.parse(
   fs.readFileSync(`${__dirname}/data/countries.json`, 'utf8')
 );
 
-const importData = async () => {
+export const importData = async () => {
   try {
     await Country.create(countries);
 
     console.log('Countries imported'.green.inverse);
-    process.exit();
+    // process.exit();
   } catch (err) {
     console.error(err);
   }
 };
 
-const deleteData = async () => {
+export const deleteData = async () => {
   try {
     await Country.deleteMany();
 

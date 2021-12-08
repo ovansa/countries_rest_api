@@ -7,6 +7,7 @@
     "start": "NODE_ENV=production babel-node server",
     "dev": "nodemon --exec babel-node server",
     "test": "NODE_ENV=test jest --testTimeout=30000 --detectOpenHandles",
+    "test:watch": "NODE_ENV=test jest --testTimeout=30000 --detectOpenHandles --watch",
     "seed:db": "node seeder -i",
     "clear:db": "node seeder -d"
   },
