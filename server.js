@@ -5,15 +5,13 @@ const morgan = require('morgan');
 const colors = require('colors');
 const errorHandler = require('./middleware/error');
 const fileupload = require('express-fileupload');
-const dbConnection = require('./config/db');
+const { connectDB } = require('./config/db');
 
 const countries = require('./routes/countries').default;
 
 dotenv.config({ path: './config/config.env' });
 
-console.log(`Environment - ${process.env.NODE_ENV}`);
-
-dbConnection.connectDB();
+connectDB();
 
 const app = express();
 

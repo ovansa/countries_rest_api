@@ -19,4 +19,4 @@ export const disconnectDB = async () => {
   await mongoose.disconnect();
 };
 
-module.exports = { connectDB, disconnectDB };
+// module.exports = { connectDB, disconnectDB };
