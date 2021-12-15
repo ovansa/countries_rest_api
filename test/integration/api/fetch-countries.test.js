@@ -53,9 +53,80 @@ describe('Fetch Countries', () => {
   });
 });
 
+describe('Create Countries', () => {
+  it('should create a country with valid details', async () => {
+    await createDocument();
+    const res = await request(server)
+      .post('/api/v1/countries')
+      .send({ name: 'Egypt', capital: 'Cairo', iso2Code: 'EG' })
+      .set('Accept', 'application/json');
+
+    expect(res.status).toBe(201);
+    expect(res.body.data.name).toBe('Egypt');
+
+    server.close();
+  });
+
+  it('should return error on create country with existing country name', async () => {
+    const { nigeria } = await createDocument();
+    const res = await request(server)
+      .post('/api/v1/countries')
+      .send({ name: nigeria.name, capital: 'Cairo', iso2Code: 'EG' })
+      .set('Accept', 'application/json');
+
+    console.log(res.body);
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Duplicate key value entered');
+
+    server.close();
+  });
+
+  it('should return error on create country with existing country capital', async () => {
+    const { nigeria } = await createDocument();
+    const res = await request(server)
+      .post('/api/v1/countries')
+      .send({ name: 'Egypt', capital: nigeria.capital, iso2Code: 'EG' })
+      .set('Accept', 'application/json');
+
+    console.log(res.body);
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Duplicate key value entered');
+
+    server.close();
+  });
+
+  it('should return error on create country with empty country name', async () => {
+    const res = await request(server)
+      .post('/api/v1/countries')
+      .send({ name: '', capital: 'Cairo', iso2Code: 'EG' })
+      .set('Accept', 'application/json');
+
+    console.log(res.body);
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Please add a country name');
+
+    server.close();
+  });
+
+  it('should return error on create country with empty country capital', async () => {
+    const res = await request(server)
+      .post('/api/v1/countries')
+      .send({ name: 'Egypt', capital: '', iso2Code: 'EG' })
+      .set('Accept', 'application/json');
+
+    console.log(res.body);
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toBe('Please add a capital name');
+
+    server.close();
+  });
+});
+
 /**
- * TODO: should create country with valid details
- * TODO: should return error on create country with existing country name
- * TODO: should return error on create country with existing country capital
- * TODO: should return error on create country without mandatory fields
+ * TODO: should delete country with valid country id
+ * TODO: should return error on delete country with invalid country id
  */
