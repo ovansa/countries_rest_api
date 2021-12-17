@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node server",
     "dev": "nodemon",
-    "test": "jest --testTimeout=30000 --detectOpenHandles",
+    "test": "jest",
     "test:watch": "NODE_ENV=test jest --testTimeout=30000 --detectOpenHandles --watch",
     "seed:db": "node seeder -i",
     "clear:db": "node seeder -d"
