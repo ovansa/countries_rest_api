@@ -8,7 +8,7 @@ jobs:
       - run:
           name: Install npm dependencies
           command: |
-            yarn install
+            npm install --save
       - run:
           name: Run Integration tests
           command: |
