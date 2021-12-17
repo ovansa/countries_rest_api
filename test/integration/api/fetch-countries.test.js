@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const request = require('supertest');
 const { server } = require('../../../server');
 
@@ -74,8 +75,6 @@ describe('Create Countries', () => {
       .send({ name: nigeria.name, capital: 'Cairo', iso2Code: 'EG' })
       .set('Accept', 'application/json');
 
-    console.log(res.body);
-
     expect(res.status).toBe(400);
     expect(res.body.error).toBe('Duplicate key value entered');
 
@@ -89,8 +88,6 @@ describe('Create Countries', () => {
       .send({ name: 'Egypt', capital: nigeria.capital, iso2Code: 'EG' })
       .set('Accept', 'application/json');
 
-    console.log(res.body);
-
     expect(res.status).toBe(400);
     expect(res.body.error).toBe('Duplicate key value entered');
 
@@ -102,8 +99,6 @@ describe('Create Countries', () => {
       .post('/api/v1/countries')
       .send({ name: '', capital: 'Cairo', iso2Code: 'EG' })
       .set('Accept', 'application/json');
-
-    console.log(res.body);
 
     expect(res.status).toBe(400);
     expect(res.body.error).toBe('Please add a country name');
@@ -117,10 +112,35 @@ describe('Create Countries', () => {
       .send({ name: 'Egypt', capital: '', iso2Code: 'EG' })
       .set('Accept', 'application/json');
 
-    console.log(res.body);
-
     expect(res.status).toBe(400);
     expect(res.body.error).toBe('Please add a capital name');
+
+    server.close();
+  });
+});
+
+describe('Fetch Single Country', () => {
+  it('should return details of a single using country id', async () => {
+    const { nigeria } = await createDocument();
+    const res = await request(server)
+      .get(`/api/v1/countries/${nigeria._id}`)
+      .set('Accept', 'application/json');
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.name).toBe(nigeria.name);
+    expect(res.body.data.capital).toBe(nigeria.capital);
+
+    server.close();
+  });
+
+  it('should return error on get country with invalid country id', async () => {
+    const invalidId = mongoose.Types.ObjectId();
+    const res = await request(server)
+      .get(`/api/v1/countries/${invalidId}`)
+      .set('Accept', 'application/json');
+
+    expect(res.status).toBe(404);
+    expect(res.body.error).toBe(`Country not found with id of ${invalidId}`);
 
     server.close();
   });
