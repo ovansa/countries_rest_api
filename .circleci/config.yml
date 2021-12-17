@@ -11,8 +11,7 @@ jobs:
             npm install --save
       - run:
           name: Run Integration tests
-          command: |
-            NODE_ENV=test jest --testTimeout=30000
+          command: npm test
       - store_test_results:
           path: test-results
       - store_artifacts:
