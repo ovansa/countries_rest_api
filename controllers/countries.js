@@ -9,7 +9,7 @@ const readXlsxFile = require('read-excel-file/node');
 // @desc Get all countries
 // @route GET /api/v1/countries
 // @access Public
-export const getCountries = asyncHandler(async (req, res, next) => {
+exports.getCountries = asyncHandler(async (req, res, next) => {
   const { name } = req.query;
   let countries = await Country.find();
   if (name) {
@@ -22,7 +22,7 @@ export const getCountries = asyncHandler(async (req, res, next) => {
 // @desc Get single country
 // @route GET /api/v1/countries/:id
 // @access Public
-export const getCountry = asyncHandler(async (req, res, next) => {
+exports.getCountry = asyncHandler(async (req, res, next) => {
   const country = await Country.findById(req.params.id);
 
   if (!country) {
@@ -37,7 +37,7 @@ export const getCountry = asyncHandler(async (req, res, next) => {
 // @desc Create single countries
 // @route POST /api/v1/countries
 // @access Public
-export const createCountries = async (req, res, next) => {
+exports.createCountries = async (req, res, next) => {
   try {
     const country = await Country.create(req.body);
 
@@ -50,7 +50,7 @@ export const createCountries = async (req, res, next) => {
 // @desc Delete country
 // @route DELETE /api/v1/countries/:id
 // @access Public
-export const deleteCountries = async (req, res, next) => {
+exports.deleteCountries = async (req, res, next) => {
   try {
     const country = await Country.deleteMany({ _id: { $in: req.body } });
 
@@ -66,7 +66,7 @@ export const deleteCountries = async (req, res, next) => {
 // @desc Create countries via excel file upload
 // @route POST /api/v1/countries/upload
 // @access Public
-export const uploadCountries = async (req, res, next) => {
+exports.uploadCountries = async (req, res, next) => {
   if (!req.files) {
     return next(new ErrorResponse(`Upload a file`, 400));
   }

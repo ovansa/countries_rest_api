@@ -6,7 +6,7 @@ const {
   db: { mongo_url },
 } = config;
 
-export const connectDB = async () => {
+const connectDB = async () => {
   const conn = await mongoose.connect(mongo_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -15,8 +15,8 @@ export const connectDB = async () => {
   console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
 };
 
-export const disconnectDB = async () => {
+const disconnectDB = async () => {
   await mongoose.disconnect();
 };
 
-// module.exports = { connectDB, disconnectDB };
+module.exports = { connectDB, disconnectDB };

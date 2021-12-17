@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production babel-node server",
-    "dev": "nodemon --exec babel-node server",
+    "dev": "nodemon",
     "test": "NODE_ENV=test jest --testTimeout=30000 --detectOpenHandles",
     "test:watch": "NODE_ENV=test jest --testTimeout=30000 --detectOpenHandles --watch",
     "seed:db": "node seeder -i",
@@ -16,7 +16,6 @@
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
-    "@babel/node": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "nodemon": "^2.0.15",
     "regenerator-runtime": "^0.13.9"

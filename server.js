@@ -7,7 +7,7 @@ const errorHandler = require('./middleware/error');
 const fileupload = require('express-fileupload');
 const { connectDB } = require('./config/db');
 
-const countries = require('./routes/countries').default;
+const countries = require('./routes/countries');
 
 dotenv.config({ path: './config/config.env' });
 

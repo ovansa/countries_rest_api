@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import {
+const express = require('express');
+const {
   getCountries,
   getCountry,
   createCountries,
   deleteCountries,
   uploadCountries,
-} from '../controllers/countries';
+} = require('../controllers/countries');
 
-const router = Router();
+const router = express.Router();
 
 router
   .route('/')
@@ -17,4 +17,4 @@ router
 router.route('/:id').get(getCountry);
 router.route('/upload').post(uploadCountries);
 
-export default router;
+module.exports = router;
