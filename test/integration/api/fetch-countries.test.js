@@ -149,6 +149,6 @@ describe('Fetch Single Country', () => {
 });
 
 /**
- * TODO: should delete country with valid country ids
+ * TODO: should delete country with valid country id
  * TODO: should return error on delete country with invalid country id
  */
