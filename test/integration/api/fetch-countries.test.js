@@ -142,13 +142,13 @@ describe('Fetch Single Country', () => {
       .set('Accept', 'application/json');
 
     expect(res.status).toBe(404);
-    expect(res.body.error).toBe(`Country not found with of ${invalidId}`);
+    expect(res.body.error).toBe(`Country not found with id of ${invalidId}`);
 
     server.close();
   });
 });
 
 /**
- * TODO: should delete country with valid country ids
+ * TODO: should delete country with valid country id
  * TODO: should return error on delete country with invalid country id
  */
