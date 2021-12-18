@@ -1,3 +1,5 @@
+global.TextEncoder = require('util').TextEncoder;
+global.TextDecoder = require('util').TextDecoder;
 const mongoose = require('mongoose');
 const request = require('supertest');
 const { server } = require('../../../server');
@@ -147,6 +149,6 @@ describe('Fetch Single Country', () => {
 });
 
 /**
- * TODO: should delete country with valid country id
+ * TODO: should delete country with valid country ids
  * TODO: should return error on delete country with invalid country id
  */

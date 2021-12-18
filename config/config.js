@@ -26,7 +26,7 @@ const test = {
     port: parseInt(process.env.TEST_APP_PORT) || 5000,
   },
   db: {
-    mongo_url: process.env.TEST_MONGO_URI || '',
+    mongo_url: process.env.TEST_MONGO_URI || 'mongodb://localhost:27017/test',
   },
 };
 

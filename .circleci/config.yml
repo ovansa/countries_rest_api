@@ -1,18 +1,32 @@
 version: 2.1
+
+dependencies:
+  cache_directories:
+    - mongodb-linux-x86_64-ubuntu1204-3.2.0
+  pre:
+    - if [[ ! -d mongodb-linux-x86_64-ubuntu1204-3.2.0 ]]; then wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1204-3.2.0.tgz && tar xvzf mongodb-linux-x86_64-ubuntu1204-3.2.0.tgz; fi
+    - sudo stop mongodb
+    - sudo cp mongodb-linux-x86_64-ubuntu1204-3.2.0/bin/* /usr/bin
+    - sudo start mongodb
+
+machine:
+  services:
+    - mongodb
+
 jobs:
   run_tests:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:10.16.3
+      - image: circleci/mongo:4.0
     steps:
       - checkout
       - run:
           name: Install npm dependencies
           command: |
-            yarn install
+            npm install
       - run:
           name: Run Integration tests
-          command: |
-            NODE_ENV=test jest --testTimeout=30000
+          command: npm test
       - store_test_results:
           path: test-results
       - store_artifacts:
