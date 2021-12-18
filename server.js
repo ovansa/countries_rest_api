@@ -46,8 +46,3 @@ process.on('unhandledRejection', (err, promise) => {
 });
 
 module.exports = { app, server };
-
-/**
- * TODO: Setup project to be deployed to AWS
- * TODO: Setup Github action to auto deploy to AWS
- */
