@@ -142,7 +142,7 @@ describe('Fetch Single Country', () => {
       .set('Accept', 'application/json');
 
     expect(res.status).toBe(404);
-    expect(res.body.error).toBe(`Country not found with id of ${invalidId}`);
+    expect(res.body.error).toBe(`Country not found with of ${invalidId}`);
 
     server.close();
   });
