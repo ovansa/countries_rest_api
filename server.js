@@ -27,6 +27,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/countries', countries);
 
+// Default root
+app.use('/', (req, res) => {
+  return res.json({ message: 'I am fine' });
+});
+
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
